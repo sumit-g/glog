@@ -7,7 +7,8 @@
 #       https://github.com/google/glog/issues/61
 #       https://github.com/google/glog/files/393474/BUILD.txt
 
-def glog_library(namespace='google', with_gflags=1):
+def glog_library(namespace='google', with_gflags=1,
+                 gflags_dep='@com_github_gflags_gflags//:gflags'):
     if native.repository_name() != '@':
         gendir = '$(GENDIR)/external/' + native.repository_name().lstrip('@')
     else:
@@ -78,7 +79,7 @@ def glog_library(namespace='google', with_gflags=1):
             '-DHAVE_LIB_GFLAGS',
         ] if with_gflags else []),
         deps = [
-            '@com_github_gflags_gflags//:gflags',
+            gflags_dep,
         ] if with_gflags else [],
     )
 
